@@ -1,0 +1,9 @@
+<%= render @article %>
+
+<div>
+  <%= link_to "Back to articles", articles_path %>
+<% if user_signed_in? && current_user?(@article.user) %> 
+  <%= link_to "Edit this article", edit_article_path(@article) %> |
+  <%= button_to "Destroy this article", @article, method: :delete %>
+<% end %>
+</div>

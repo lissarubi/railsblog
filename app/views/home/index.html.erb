@@ -1,0 +1,20 @@
+<% if user_signed_in? %> 
+  <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
+<% else %>
+  <%= button_to "Sign in", new_user_session_path %> 
+<% end %>
+
+<h1>RailsBlog</h1>
+
+<%= link_to "New article", new_article_path %>
+
+<h2>Latest posts:</h2>
+
+<div id="articles">
+  <% @articles.each do |article| %>
+    <%= render article %>
+    <p>
+      <%= link_to "Show this article", article %>
+    </p>
+  <% end %>
+</div>
