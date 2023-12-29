@@ -10,7 +10,7 @@ class ArticlesController < ApplicationController
   # GET /articles/1 or /articles/1.json
   def show
       @article = Article.find(params[:id])
-      increment_views
+      @article.increment! :views, 1
   end
 
   # GET /articles/new
@@ -69,11 +69,6 @@ class ArticlesController < ApplicationController
         rescue
           redirect_to root_url
         end
-      end
-
-      def increment_views
-        @article.increment :views, 1
-        @article.save!
       end
 
     # Only allow a list of trusted parameters through.
