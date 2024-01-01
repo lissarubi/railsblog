@@ -1,4 +1,8 @@
 <div id="<%= dom_id article %>">
+
+<% if article.edited? %> 
+    (edited)
+<% end %>
   <p>
     <strong>Title:</strong>
     <%= article.title %>

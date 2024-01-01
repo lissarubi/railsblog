@@ -1,7 +1,7 @@
 <h1>Articles</h1>
 
 <div id="articles">
-  <% @articles.each do |article| %>
+  <% @articles.reverse.each do |article| %>
     <%= render article %>
     <p>
       <%= link_to "Show this article", article %>

@@ -10,7 +10,11 @@ class ArticlesController < ApplicationController
   # GET /articles/1 or /articles/1.json
   def show
       @article = Article.find(params[:id])
+      @comments = @article.comments
       @article.increment! :views, 1
+
+      @comment = Comment.new
+      @comment.article_id = @article.id
   end
 
   # GET /articles/new
@@ -25,7 +29,6 @@ class ArticlesController < ApplicationController
   # POST /articles or /articles.json
   def create
     @article = current_user.articles.build(article_params)
-    puts @article
 
     respond_to do |format|
       if @article.save
@@ -40,13 +43,23 @@ class ArticlesController < ApplicationController
 
   # PATCH/PUT /articles/1 or /articles/1.json
   def update
-    respond_to do |format|
-      if @article.update(article_params)
-        format.html { redirect_to article_url(@article), notice: "Article was successfully updated." }
-        format.json { render :show, status: :ok, location: @article }
+      old_article = Article.find(params[:id])
+      article_to_compare = Article.new(article_params)
+
+        respond_to do |format|
+      if compare_articles_content old_article, article_to_compare
+        @article.edited = true
+
+          if @article.update(article_params)
+            format.html { redirect_to article_url(@article), notice: "Article was successfully updated." }
+            format.json { render :show, status: :ok, location: @article }
+          else
+            format.html { render :edit, status: :unprocessable_entity }
+            format.json { render json: @article.errors, status: :unprocessable_entity }
+          end
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @article.errors, status: :unprocessable_entity }
+            format.html { redirect_to article_url(@article), notice: "Article hasn't any change." }
+            format.json { render :show, status: :ok, location: @article }
       end
     end
   end
@@ -74,5 +87,9 @@ class ArticlesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def article_params
       params.require(:article).permit(:title, :body)
+    end
+
+    def compare_articles_content(a1, a2)
+      a1.body != a2.body || a1.title != a2.title
     end
 end

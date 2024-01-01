@@ -1,0 +1,9 @@
+<div id="comments">
+  <% @article.comments.reverse.each do |comment| %>
+    <%= render comment %>
+<% if user_signed_in? && current_user?(comment.user) %> 
+  <%= link_to "Edit this comment", edit_article_comment_path(@article, comment) %> |
+  <%= button_to "Destroy this comment", [@article, comment], method: :delete %>
+<% end %>
+  <% end %>
+</div>
