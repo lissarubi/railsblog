@@ -1,5 +1,3 @@
-<h1>Articles</h1>
-
 <div id="articles">
   <% @articles.reverse.each do |article| %>
     <%= render article %>
@@ -8,7 +6,3 @@
     </p>
   <% end %>
 </div>
-
-  <%= render 'article_list', locals: { articles: @articles } %>
-
-<%= link_to "New article", new_article_path %>

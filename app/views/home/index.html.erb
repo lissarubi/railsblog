@@ -10,11 +10,4 @@
 
 <h2>Latest posts:</h2>
 
-<div id="articles">
-  <% @articles.reverse.each do |article| %>
-    <%= render article %>
-    <p>
-      <%= link_to "Show this article", article %>
-    </p>
-  <% end %>
-</div>
+<%= render :partial => 'articles/article_list', locals: { articles: @articles } %>
