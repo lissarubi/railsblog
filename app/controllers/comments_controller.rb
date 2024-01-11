@@ -14,6 +14,8 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
+        CommentMailer.with(comment: @comment).notify_comment.deliver_later
+
         format.html { redirect_to article_url(@article.id), notice: "Comment was successfully created." }
         format.json { render article_url(@article.id), status: :created, location: @comment }
       else

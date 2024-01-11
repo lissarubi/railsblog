@@ -1,6 +1,6 @@
 # Rails Blog
 
-Rails Blog é um projeto com o objetivo de estudar e demonstrar meus conhecimentos em MVC, focando em Ruby on Rails, na forma de um blog.
+Rails Blog é um projeto com o objetivo de estudar e demonstrar meus conhecimentos em MVC, focando em **Ruby on Rails**, na forma de um blog, e utilizando **Sidekiq** e Action Mailer para queue de tarefas.
 
 ## Startup
 
@@ -11,6 +11,10 @@ Para instalar todas as bibliotecas do projeto, use `bundle install`
 ### Banco de dados
 
 Por padrão, o projeto utiliza Sqlite e migrations, então para realizar as migrations, utilize o comando `rails db:migrate`
+
+### Sidekiq
+
+Para iniciar o Sidekiq utilizando o próprio bundle do projeto, use `bundle exec sidekiq -q default -q mailers`
 
 ### Start
 
